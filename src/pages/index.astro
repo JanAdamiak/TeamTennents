@@ -1,0 +1,127 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Placeholder from '../components/Placeholder.astro';
+import PlayerCard from '../components/PlayerCard.astro';
+import tournament from '../data/tournament.json';
+import team from '../data/team.json';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+const fmt = (d: Date) =>
+  d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+<Base>
+  <section class="hero">
+    <div class="hero-text">
+      <p class="kicker">Next stop: {tournament.city}</p>
+      <h1>Come meet us at the {tournament.name}</h1>
+      <p class="hero-meta">{tournament.game} · {tournament.dates}</p>
+      <p class="lede">{tournament.blurb}</p>
+      <a class="button" href={`${base}/team/`}>Meet the team</a>
+    </div>
+    <div class="hero-photo panel">
+      {tournament.photo ? (
+        <img src={`${base}/images/${tournament.photo}`} alt="Team Tennent's" />
+      ) : (
+        <Placeholder label="Team photo coming soon" />
+      )}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <h2>The team</h2>
+      <a href={`${base}/team/`}>All {team.length} players</a>
+    </div>
+    <div class="grid">
+      {team.slice(0, 4).map((player) => <PlayerCard player={player} />)}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <h2>Latest news</h2>
+      <a href={`${base}/blog/`}>All posts</a>
+    </div>
+    <ul class="posts">
+      {posts.map((post) => (
+        <li class="panel">
+          <time datetime={post.data.date.toISOString()}>{fmt(post.data.date)}</time>
+          <h3><a href={`${base}/blog/${post.id}/`}>{post.data.title}</a></h3>
+          <p>{post.data.summary}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+    gap: 2.5rem;
+    align-items: center;
+  }
+  .kicker {
+    display: inline-block;
+    background: var(--ink);
+    color: var(--yellow);
+    font-weight: 800;
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.7rem;
+    margin: 0 0 1rem;
+  }
+  .hero-meta {
+    font-weight: 800;
+    font-size: 1.1rem;
+    margin: 0 0 0.75rem;
+  }
+  .hero .lede {
+    margin: 0 0 1.5rem;
+  }
+  .hero-photo {
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+  }
+  .hero-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.5rem;
+  }
+  .posts {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 1.25rem;
+  }
+  .posts li {
+    padding: 1.1rem 1.25rem;
+  }
+  .posts time {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .posts h3 {
+    margin: 0.25rem 0 0.4rem;
+    text-transform: none;
+  }
+  .posts h3 a {
+    color: var(--red);
+  }
+  .posts p {
+    margin: 0;
+  }
+</style>

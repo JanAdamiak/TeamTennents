@@ -1,0 +1,40 @@
+---
+// Stand-in shown until a real photo is added.
+const { label = 'Photo coming soon', mark = 'TT' } = Astro.props;
+---
+<div class="placeholder" role="img" aria-label={label}>
+  <span class="placeholder-mark">{mark}</span>
+  <span class="placeholder-label">{label}</span>
+</div>
+
+<style>
+  .placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    background: repeating-linear-gradient(
+      -45deg,
+      #111 0 18px,
+      #1d1d1d 18px 36px
+    );
+    color: var(--yellow);
+    text-align: center;
+    padding: 1rem;
+  }
+  .placeholder-mark {
+    font-family: var(--display);
+    font-size: clamp(2rem, 8vw, 3.5rem);
+    color: var(--red);
+    line-height: 1;
+  }
+  .placeholder-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+</style>

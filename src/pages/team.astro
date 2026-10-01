@@ -1,0 +1,33 @@
+---
+import Base from '../layouts/Base.astro';
+import Placeholder from '../components/Placeholder.astro';
+import PlayerCard from '../components/PlayerCard.astro';
+import team from '../data/team.json';
+---
+<Base title="Meet the team" description="The players of Team Tennent's.">
+  <h1>Meet the team</h1>
+  <p class="lede">
+    {team.length} friends, one game, and a wide range of opinions about how long a round should take.
+  </p>
+
+  <div class="team-photo panel">
+    <Placeholder label="Whole team photo coming soon" />
+  </div>
+
+  <div class="grid">
+    {team.map((player) => <PlayerCard player={player} />)}
+  </div>
+</Base>
+
+<style>
+  .team-photo {
+    aspect-ratio: 21 / 9;
+    overflow: hidden;
+    margin: 2rem 0 2.5rem;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.5rem;
+  }
+</style>

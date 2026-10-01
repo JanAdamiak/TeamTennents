@@ -1,0 +1,75 @@
+---
+import Base from '../layouts/Base.astro';
+import results from '../data/accomplishments.json';
+
+type Result = { date: string; event: string; player: string; placing: string };
+const sorted = (results as Result[]).slice().sort((a, b) => b.date.localeCompare(a.date));
+const fmt = (d: string) =>
+  new Date(d).toLocaleDateString('en-GB', { month: 'short', year: 'numeric' });
+---
+<Base title="Accomplishments" description="Tournament results from Team Tennent's.">
+  <h1>Accomplishments</h1>
+  <p class="lede">Where we have been and how it went.</p>
+
+  {sorted.length === 0 ? (
+    <div class="empty panel">
+      <h2>Results coming soon</h2>
+      <p>We are still counting the trophies. Check back after the next tournament.</p>
+    </div>
+  ) : (
+    <ol class="results">
+      {sorted.map((r) => (
+        <li class="panel">
+          <span class="placing">{r.placing}</span>
+          <div>
+            <h3>{r.event}</h3>
+            <p>{r.player} · {fmt(r.date)}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  )}
+</Base>
+
+<style>
+  .empty {
+    padding: 2rem 1.5rem;
+    margin-top: 2rem;
+    max-width: 40rem;
+  }
+  .empty p {
+    margin: 0;
+  }
+  .results {
+    list-style: none;
+    margin: 2rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 1.25rem;
+  }
+  .results li {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 1rem 1.25rem;
+  }
+  .placing {
+    flex: none;
+    min-width: 5.5rem;
+    text-align: center;
+    background: var(--red);
+    color: #fff;
+    font-family: var(--display);
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    padding: 0.5rem 0.6rem;
+    border: 3px solid var(--ink);
+  }
+  .results h3 {
+    margin: 0 0 0.2rem;
+    text-transform: none;
+  }
+  .results p {
+    margin: 0;
+  }
+</style>
