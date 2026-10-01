@@ -5,7 +5,7 @@ import results from '../data/accomplishments.json';
 type Result = { date: string; event: string; player: string; placing: string };
 const sorted = (results as Result[]).slice().sort((a, b) => b.date.localeCompare(a.date));
 const fmt = (d: string) =>
-  new Date(d).toLocaleDateString('en-GB', { month: 'short', year: 'numeric' });
+  new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
 ---
 <Base title="Accomplishments" description="Tournament results from Team Tennent's.">
   <h1>Accomplishments</h1>
