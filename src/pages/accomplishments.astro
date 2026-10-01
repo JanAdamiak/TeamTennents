@@ -3,31 +3,79 @@ import Base from '../layouts/Base.astro';
 import results from '../data/accomplishments.json';
 
 type Result = { date: string; event: string; player: string; placing: string };
-const sorted = (results as Result[]).slice().sort((a, b) => b.date.localeCompare(a.date));
+type Event = { date: string; event: string; results: Result[] };
+
+const order = ['Champion', 'Finalist', 'Top 4', 'Top 8', 'Top 16', 'Top 32', 'Top 64', 'Day 2'];
+const rank = (p: string) => (order.indexOf(p) === -1 ? order.length : order.indexOf(p));
+const all = results as Result[];
+const sorted = all.slice().sort((a, b) => b.date.localeCompare(a.date));
 const fmt = (d: string) =>
-  new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
+  new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', timeZone: 'UTC' });
+
+// one card per tournament, tournaments grouped by year
+const events: Event[] = [];
+for (const r of sorted) {
+  let e = events.find((e) => e.date === r.date && e.event === r.event);
+  if (!e) events.push((e = { date: r.date, event: r.event, results: [] }));
+  e.results.push(r);
+}
+for (const e of events) e.results.sort((a, b) => rank(a.placing) - rank(b.placing));
+
+const years = [...new Set(events.map((e) => e.date.slice(0, 4)))];
+const count = (...placings: string[]) => all.filter((r) => placings.includes(r.placing)).length;
+const stats = [
+  { label: 'Titles', value: count('Champion') },
+  { label: 'Finals', value: count('Champion', 'Finalist') },
+  { label: 'Top 8s', value: count('Champion', 'Finalist', 'Top 4', 'Top 8') },
+  { label: 'Events', value: events.length },
+];
 ---
 <Base title="Accomplishments" description="Tournament results from Team Tennent's.">
   <h1>Accomplishments</h1>
   <p class="lede">Where we have been and how it went.</p>
 
-  {sorted.length === 0 ? (
+  {events.length === 0 ? (
     <div class="empty panel">
       <h2>Results coming soon</h2>
       <p>We are still counting the trophies. Check back after the next tournament.</p>
     </div>
   ) : (
-    <ol class="results">
-      {sorted.map((r) => (
-        <li class="panel">
-          <span class="placing">{r.placing}</span>
-          <div>
-            <h3>{r.event}</h3>
-            <p>{r.player} · {fmt(r.date)}</p>
+    <>
+      <dl class="stats">
+        {stats.map((s) => (
+          <div class="panel">
+            <dd>{s.value}</dd>
+            <dt>{s.label}</dt>
           </div>
-        </li>
+        ))}
+      </dl>
+
+      <nav class="years" aria-label="Jump to year">
+        {years.map((y) => <a href={`#y${y}`}>{y}</a>)}
+      </nav>
+
+      {years.map((y) => (
+        <section class="section" id={`y${y}`}>
+          <h2>{y}</h2>
+          <ol class="events">
+            {events.filter((e) => e.date.startsWith(y)).map((e) => (
+              <li class="panel">
+                <p class="date">{fmt(e.date)}</p>
+                <h3>{e.event}</h3>
+                <ul>
+                  {e.results.map((r) => (
+                    <li>
+                      <span class:list={['placing', { win: r.placing === 'Champion' }]}>{r.placing}</span>
+                      {r.player}
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ol>
+        </section>
       ))}
-    </ol>
+    </>
   )}
 </Base>
 
@@ -40,36 +88,94 @@ const fmt = (d: string) =>
   .empty p {
     margin: 0;
   }
-  .results {
-    list-style: none;
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+    gap: 1.25rem;
     margin: 2rem 0 0;
+  }
+  .stats div {
+    padding: 0.9rem 1rem;
+    text-align: center;
+  }
+  .stats dd {
+    margin: 0;
+    font-family: var(--display);
+    font-size: 2.4rem;
+    line-height: 1.1;
+    color: var(--red);
+  }
+  .stats dt {
+    font-weight: 800;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .years {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 2rem;
+  }
+  .years a {
+    font-family: var(--display);
+    text-decoration: none;
+    padding: 0.3rem 0.8rem;
+    border: 3px solid var(--ink);
+    background: var(--paper);
+  }
+  .section {
+    margin-top: 3rem;
+    scroll-margin-top: 1rem;
+  }
+  .events {
+    list-style: none;
+    margin: 0;
     padding: 0;
     display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
     gap: 1.25rem;
   }
-  .results li {
+  .events > li {
+    padding: 1rem 1.25rem;
+  }
+  .date {
+    margin: 0;
+    font-size: 0.8rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .events h3 {
+    margin: 0 0 0.75rem;
+    text-transform: none;
+  }
+  .events ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.4rem;
+  }
+  .events ul li {
     display: flex;
     align-items: center;
-    gap: 1.25rem;
-    padding: 1rem 1.25rem;
+    gap: 0.75rem;
+    font-weight: 600;
   }
   .placing {
     flex: none;
-    min-width: 5.5rem;
+    min-width: 5.75rem;
     text-align: center;
+    font-family: var(--display);
+    font-size: 0.8rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    padding: 0.15rem 0.4rem;
+    border: 2px solid var(--ink);
+  }
+  .placing.win {
     background: var(--red);
     color: #fff;
-    font-family: var(--display);
-    font-size: 1.1rem;
-    text-transform: uppercase;
-    padding: 0.5rem 0.6rem;
-    border: 3px solid var(--ink);
-  }
-  .results h3 {
-    margin: 0 0 0.2rem;
-    text-transform: none;
-  }
-  .results p {
-    margin: 0;
   }
 </style>
