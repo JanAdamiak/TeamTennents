@@ -1,10 +1,7 @@
 import { defineConfig } from 'astro/config';
 
-// GitHub Pages serves the site at https://<user>.github.io/<repo>/.
-// If the repo gets a different name, change `base` to match it.
-// With a custom domain, set `site` to that domain and remove `base`.
+// Served from the custom domain set in the repo's Settings → Pages.
 export default defineConfig({
-  site: 'https://janadamiak.github.io',
-  base: '/TeamTennants',
+  site: 'https://teamtennents.uk',
   trailingSlash: 'always',
 });

@@ -6,7 +6,7 @@ Static site built with [Astro](https://astro.build), deployed to GitHub Pages.
 
 ```sh
 npm install
-npm run dev      # http://localhost:4321/TeamTennants/
+npm run dev      # http://localhost:4321/
 npm run build    # output in dist/
 ```
 
@@ -58,5 +58,5 @@ Add `draft: true` to keep a post off the site.
 Pushing to `main` runs `.github/workflows/deploy.yml`. In the GitHub repo, set
 **Settings → Pages → Source** to **GitHub Actions** once.
 
-`astro.config.mjs` assumes the repo is called `TeamTennants`. If it has another
-name, change `base` to `/<repo-name>`.
+The site is served from `teamtennents.uk`, set under **Settings → Pages → Custom domain**
+and as `site` in `astro.config.mjs`.
