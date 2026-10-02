@@ -1,0 +1,20 @@
+{
+  "urls": [
+    "https://hri.gg/leaderboard/players",
+    "https://hri.gg/leaderboard/season-1/players",
+    "https://hri.gg/leaderboard/season-0/players"
+  ],
+  "players": {
+    "AllyG": "AllyG",
+    "TechyFIEND": "Techyfiend",
+    "HeatherG": "HeatherG",
+    "AkkoTT": "Oli",
+    "Toastbred_TT": "Sam",
+    "MarkMarkTT": "MarkMark",
+    "SpudsTT": "Spuds",
+    "Good_FraserTT": "Good Fraser",
+    "Fraser_TT": "Evil Fraser",
+    "jlegolas_TT": "Jlegolas",
+    "CraggleTT": "Craig"
+  }
+}

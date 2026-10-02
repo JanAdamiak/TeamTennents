@@ -29,7 +29,23 @@ Anything with `"photo": null` shows a placeholder.
 
 ### Accomplishments
 
-Add entries to `src/data/accomplishments.json`. They are sorted newest first.
+Results are pulled from [hri.gg](https://hri.gg) with a script (Python 3, nothing to install):
+
+```sh
+python3 scripts/update_accomplishments.py --dry-run   # show what would change
+python3 scripts/update_accomplishments.py             # update src/data/accomplishments.json
+python3 -m unittest discover scripts                  # run the script's tests
+```
+
+It keeps Top 8 or better at Planetary Qualifiers and Top 64 or better everywhere else, sorted newest first.
+Players and pages to scrape are in `scripts/accomplishments_config.json`:
+
+- `players` maps the hri.gg nickname to the name shown on the site.
+- `urls` are the pages to scrape; the nickname is added to the end of each. `leaderboard/players` is
+  always the current season, so when a new season starts add the one that just ended
+  (e.g. `https://hri.gg/leaderboard/season-2/players`).
+
+Entries can still be added by hand; the script keeps anything it did not scrape itself.
 
 ```json
 [
