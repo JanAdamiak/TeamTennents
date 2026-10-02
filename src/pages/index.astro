@@ -24,7 +24,7 @@ const fmt = (d: Date) =>
     </div>
     <div class="hero-photo panel">
       {tournament.photo ? (
-        <img src={`${base}/images/${tournament.photo}`} alt="Team Tennent's" />
+        <img src={`${base}/images/${tournament.photo}`} alt={tournament.name} />
       ) : (
         <Placeholder label="Team photo coming soon" />
       )}
@@ -85,7 +85,7 @@ const fmt = (d: Date) =>
     margin: 0 0 1.5rem;
   }
   .hero-photo {
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 13 / 6;
     overflow: hidden;
   }
   .hero-photo img {

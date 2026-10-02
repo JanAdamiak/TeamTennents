@@ -22,7 +22,7 @@ npm run build    # output in dist/
 ### Photos
 
 - Player photo: put the file in `public/images/team/` and set `"photo": "allyg.jpg"` for that player in `team.json`. Square images work best.
-- Home page team photo: put the file in `public/images/` and set `"photo": "team.jpg"` in `tournament.json`.
+- Home page team photo: put the file in `public/images/` and set `"photo": "team.webp"` in `tournament.json`.
 - The wide photo on the team page is still a placeholder in `src/pages/team.astro`.
 
 Anything with `"photo": null` shows a placeholder.
