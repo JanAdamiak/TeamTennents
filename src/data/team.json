@@ -1,7 +1,7 @@
 [
   { "name": "AllyG", "bio": "Sector winner, will top 16 with or without a hangover.", "photo": "allyg.webp" },
-  { "name": "Techyfiend", "role": "Team captain", "bio": "Our team captain, built like a unit, plays like one too!", "photo": null },
-  { "name": "HeatherG", "bio": "Top 32 worlds open, top 64 regional, the only sane person on this team.", "photo": null },
+  { "name": "Techyfiend", "role": "Team captain", "bio": "Our team captain, built like a unit, plays like one too!", "photo": "techyfiend.webp" },
+  { "name": "HeatherG", "bio": "Top 32 worlds open, top 64 regional, the only sane person on this team.", "photo": "heatherg.webp" },
   { "name": "Oli", "bio": "Beast of a player in any card game he touches, if he bothers to play. His biggest kryptonite: bread crumbs.", "photo": null },
   { "name": "Evil Fraser", "bio": "Somehow plays even less than Oli. Class in any game he touches.", "photo": null },
   { "name": "Good Fraser", "bio": "Limited expert, goes to time every round, goes by Frazer.", "photo": null },
