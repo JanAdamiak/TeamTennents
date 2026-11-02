@@ -16,9 +16,13 @@ And to **AllyG**, who made **top 8 in constructed**. Another big finish to add t
 
 ![AllyG and Good Fraser, our two top 8 players](/images/blog/utrecht-top8.webp)
 
+Two top 8s, two Tennent's. The T stands for Top 8.
+
+![Two pints of Tennent's: Top 8 Limited and Top 8 Premier](/images/blog/top8-pints.webp)
+
 ## More shout-outs
 
-**Techyfiend** (Thomas), our captain, made **top 32** in constructed. **Tim** made **top 32** in limited, and **Jlegolas** (Jan) made **top 64** in limited. Three more strong finishes for the team.
+**Techyfiend** (Thomas), our captain, made **top 32** in constructed. **Tim** made **top 32** in limited, **Chris** made **top 64** in constructed, and **Jlegolas** (Jan) made **top 64** in limited. Four more strong finishes for the team.
 
 ## The secret tech
 
