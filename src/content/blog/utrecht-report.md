@@ -18,7 +18,7 @@ And to **AllyG**, who made **top 8 in constructed**. Another big finish to add t
 
 ## More shout-outs
 
-**Techyfiend** (Thomas), our captain, made **top 32** in constructed. **Jlegolas** (Jan) made **top 64** in limited. Two more strong finishes for the team.
+**Techyfiend** (Thomas), our captain, made **top 32** in constructed. **Tim** made **top 32** in limited, and **Jlegolas** (Jan) made **top 64** in limited. Three more strong finishes for the team.
 
 ## The secret tech
 
